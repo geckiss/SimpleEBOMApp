@@ -1,3 +1,5 @@
+package web;
+
 public class Part {
 
     private String _type;

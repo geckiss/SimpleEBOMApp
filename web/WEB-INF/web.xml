@@ -6,12 +6,19 @@
 
     <servlet>
         <servlet-name>partMan</servlet-name>
-        <servlet-class>PartManager</servlet-class>
+        <servlet-class>WEB-INF/classes/parts/PartManager</servlet-class>
+
     </servlet>
 
     <servlet-mapping>
         <servlet-name>partMan</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
+        <url-pattern>/parts</url-pattern>
 
+    </servlet-mapping>
+    <!--
+    <servlet-mapping>
+        <servlet-name>add</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+    -->
 </web-app>

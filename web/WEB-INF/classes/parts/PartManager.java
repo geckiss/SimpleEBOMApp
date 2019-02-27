@@ -1,3 +1,4 @@
+package web;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -159,13 +160,24 @@ public class PartManager extends HttpServlet {
         return res;
     }
 
-    /// Pridá object parts.Part do DB
-    public boolean add(Part pPart) {
+    /// Pridá object Part do DB
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+
         boolean addSuccessful = false;
 
-        if (pPart != null) {
-            Connection conn = null;
+        String type = request.getParameter("Type");
+        String name = request.getParameter("Name");
+        int length = request.getParameter("Length");
+        int width = request.getParameter("Width");
+        double weight = request.getParameter("Weight");
+        double cost = request.getParameter("Cost");
 
+        response.setContentType("text/html");
+
+        Connection conn = null;
+
+        if (!type.equals("") && !name.equals("")) {
             try {
                 conn = DriverManager.getConnection(
                         "localhost:3306",
@@ -177,10 +189,9 @@ public class PartManager extends HttpServlet {
                 ResultSet res = statement.executeQuery(
                         "INSERT INTO part (type, name, length, width, weight, cost)" +
                                 "values (" +
-                                pPart.GetType() + "," + pPart.GetName() + "," +
-                                pPart.GetLength() + "," + pPart.GetWidth() + "," +
-                                pPart.GetWeight() + "," + pPart.GetCost() +
-                                ")"
+                                type + "," + name + "," +
+                                length + "," + width + "," +
+                                weight + "," + cost + ")"
                 );
 
                 // TODO rowInserted mozno nie je spravna metoda
@@ -198,8 +209,7 @@ public class PartManager extends HttpServlet {
                     // logger.warn("Could not close JDBC Connection", e);
                 }
             }
-        }
 
-        return addSuccessful;
+        }
     }
 }
