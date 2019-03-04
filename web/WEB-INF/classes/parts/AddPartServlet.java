@@ -1,5 +1,6 @@
-package web;
+package parts;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,12 +11,20 @@ import java.sql.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class PartManager extends HttpServlet {
+@WebServlet("/AddPart")
+public class AddPartServlet extends BaseClass {
+
+    private String url;
+    private String user;
+    private String pass;
+    private String driver;
 
     @Override
     public void init() throws ServletException {
-        // Do required initialization
-
+        url = "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC";
+        user = "admin";
+        pass = "nbusr123";
+        driver = "com.mysql.cj.jdbc.Driver";
     }
 
     @Override
@@ -27,7 +36,7 @@ public class PartManager extends HttpServlet {
         Locale locale = new Locale("sk", "SK");
         ResourceBundle rb =
                 ResourceBundle.getBundle("parts.Bundle", locale);
-*/
+        */
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
@@ -89,10 +98,10 @@ public class PartManager extends HttpServlet {
                     }
 
                     out.println("</tr>");
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         out.println("</table>");
@@ -101,22 +110,80 @@ public class PartManager extends HttpServlet {
         out.println("</html>");
     }
 
+    /// Pridá object Part do DB
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+
+        String type = request.getParameter("Type");
+        String name = request.getParameter("Name");
+        int length = Integer.parseInt(request.getParameter("Length"));
+        int width = Integer.parseInt(request.getParameter("Width"));
+        double weight = Double.parseDouble(request.getParameter("Weight"));
+        double cost = Double.parseDouble(request.getParameter("Cost"));
+
+        response.setContentType("text/html");
+
+        Connection conn = null;
+
+        if (!type.equals("") && !name.equals("")) {
+            try {
+                Class.forName(driver);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                conn = DriverManager.getConnection(
+                        url,
+                        user,
+                        pass
+                );
+
+                Statement statement = conn.createStatement();
+                boolean insert_ok = statement.execute(
+                        "INSERT INTO part (type, name, length, width, weight, cost)" +
+                                "values (\"" +
+                                type + "\",\"" + name + "\",\"" +
+                                length + "\",\"" + width + "\",\"" +
+                                weight + "\",\"" + cost + "\")"
+                );
+
+
+                if (insert_ok) {
+                    request.setAttribute("res_of_add", "Part added SUCCESSFULLY");
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    // if null ???
+                    conn.close();
+                } catch (Throwable e) {
+                    // logger.warn("Could not close JDBC Connection", e);
+                }
+            }
+
+        }
+    }
+
     /// Získa hlavičky stĺpcov
     private ResultSet getHeaders() {
         Connection conn;
         ResultSet res = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(driver);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
         try {
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
-                    "admin",
-                    "nbusr123"
+                    url,
+                    user,
+                    pass
             );
 
             Statement statement = conn.createStatement();
@@ -138,16 +205,16 @@ public class PartManager extends HttpServlet {
         Connection conn;
         ResultSet res = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(driver);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
         try {
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
-                    "admin",
-                    "nbusr123"
+                    url,
+                    user,
+                    pass
             );
             Statement query = conn.createStatement();
             res = query.executeQuery("SELECT * FROM part");
@@ -160,56 +227,5 @@ public class PartManager extends HttpServlet {
         return res;
     }
 
-    /// Pridá object Part do DB
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
 
-        boolean addSuccessful = false;
-
-        String type = request.getParameter("Type");
-        String name = request.getParameter("Name");
-        int length = request.getParameter("Length");
-        int width = request.getParameter("Width");
-        double weight = request.getParameter("Weight");
-        double cost = request.getParameter("Cost");
-
-        response.setContentType("text/html");
-
-        Connection conn = null;
-
-        if (!type.equals("") && !name.equals("")) {
-            try {
-                conn = DriverManager.getConnection(
-                        "localhost:3306",
-                        "admin",
-                        "nbusr123"
-                );
-
-                Statement statement = conn.createStatement();
-                ResultSet res = statement.executeQuery(
-                        "INSERT INTO part (type, name, length, width, weight, cost)" +
-                                "values (" +
-                                type + "," + name + "," +
-                                length + "," + width + "," +
-                                weight + "," + cost + ")"
-                );
-
-                // TODO rowInserted mozno nie je spravna metoda
-                if (res.rowInserted()) {
-                    addSuccessful = true;
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    // if null ???
-                    conn.close();
-                } catch (Throwable e) {
-                    // logger.warn("Could not close JDBC Connection", e);
-                }
-            }
-
-        }
-    }
 }

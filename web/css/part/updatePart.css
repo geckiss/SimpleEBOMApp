@@ -1,0 +1,23 @@
+#updatePage-content-container {
+    margin: 0 auto;
+}
+
+#part-update-separator {
+    width: 100%;
+    height: 20px;
+    margin: 20px 0;
+}
+
+#part-update-separator #add-successful {
+    background-color: green;
+}
+
+#part-update-separator #add-unsuccessful {
+    background-color: red;
+}
+
+#part-update-form-container {
+    margin: 0 auto;
+}
+
+

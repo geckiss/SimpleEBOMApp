@@ -1,0 +1,84 @@
+@import "part/addPart.css";
+@import "part/updatePart.css";
+@import "part/deletePart.css";
+
+#menu-container {
+    background-color: #398AA4;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    height: 60px;
+    padding: 15px;
+}
+
+#part-link-switcher {
+    width: 20%;
+    height: auto;
+    display: inline-block;
+    float: left;
+}
+
+#parts-mngmnt-container {
+    display: inline-block;
+    margin: 12px;
+    width: 55%;
+    float: left;
+}
+
+.part-category-span {
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 3px;
+    text-align: center;
+}
+
+button {
+    padding: 3px;
+}
+
+#title-div {
+    width: 20%;
+    display: inline-block;
+    margin: 12px;
+    float: right;
+    font-size: 28px;
+    text-shadow: 2px 2px 5px white;
+}
+
+.button {
+    background: transparent;
+    padding: 5px 10px;
+}
+
+#overviewPage-content-container {
+    margin: 0 auto;
+}
+
+#part-overview-separator {
+    height: 20px;
+    margin: 20px;
+}
+
+#content-container {
+    display: -webkit-flex;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tr:nth-child(odd) {
+    background-color: #398AA4;
+}
+
+tr th {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+td, th {
+    border: 2px solid black;
+    padding: 5px 10px;
+}
