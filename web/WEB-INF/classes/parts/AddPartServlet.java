@@ -1,15 +1,14 @@
 package parts;
 
+import base.BaseClass;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 @WebServlet("/AddPart")
 public class AddPartServlet extends BaseClass {
@@ -140,7 +139,7 @@ public class AddPartServlet extends BaseClass {
                 );
 
                 Statement statement = conn.createStatement();
-                boolean insert_ok = statement.execute(
+                statement.execute(
                         "INSERT INTO part (type, name, length, width, weight, cost)" +
                                 "values (\"" +
                                 type + "\",\"" + name + "\",\"" +
@@ -148,11 +147,8 @@ public class AddPartServlet extends BaseClass {
                                 weight + "\",\"" + cost + "\")"
                 );
 
-
-                if (insert_ok) {
-                    request.setAttribute("res_of_add", "Part added SUCCESSFULLY");
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
-                }
+                request.setAttribute("res_of_add", "Part added SUCCESSFULLY");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
 
             } catch (SQLException e) {
                 e.printStackTrace();

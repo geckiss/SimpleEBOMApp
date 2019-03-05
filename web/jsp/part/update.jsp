@@ -1,4 +1,5 @@
-<%@ page import="java.sql.*" %><%--
+<%@ page import="java.sql.*" %>
+<%--
   Created by IntelliJ IDEA.
   User: Mato
   Date: 27.2.2019
@@ -9,27 +10,77 @@
 <html>
 <head>
     <title>Simple EBOM App - Update Part</title>
-    <script type="text/javascript" src="../../js/part/update_part.js" > </script>
+    <script type="text/javascript" src="../../js/part/updatePart.js" />
 </head>
 <body>
-<div id="updatePage-content-container">
-    <!--
-    <form action="" method="post">
-      <input type="submit" name="addButton" value="Add Part" />
-    </form>
-    -->
+    <div id="updatePage-content-container">
+        <!--
+        <form action="" method="post">
+          <input type="submit" name="addButton" value="Add Part" />
+        </form>
+        -->
 
-    <div id="part-update-separator"></div>
-    <div id="update-table-container">
+        <div id="part-update-separator"></div>
+        <div id="update-table-container">
 
-        <table id="part-update-table">
-            <tr>
-                <!-- Headers -->
+            <table id="part-update-table">
+                <tr>
+                    <!-- Headers -->
+                    <%
+                    response.setContentType("text/html");
+                    Connection conn;
+                    ResultSet res = null;
+
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        conn = DriverManager.getConnection(
+                                "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
+                                "admin",
+                                "nbusr123"
+                        );
+
+                        Statement statement = conn.createStatement();
+                        res = conn.getMetaData().getColumns(
+                            null,
+                            null,
+                            "part",
+                            null
+                        );
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (res != null) {
+                        try {
+                            boolean preskocId = true;
+                            while (res.next()) {
+                                if (preskocId) {
+                                    // No ID in table, first header will be PART
+                                    %>
+                                    <th>PART</th>
+                                    <%
+                                    preskocId = false;
+                                    continue;
+                                }
+
+                                String name = res.getString("COLUMN_NAME").toUpperCase();
+                                out.println("<th>" + name + "</th>");
+                            }
+                            out.println("<th>ACTION</th>");
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    %>
+                </tr>
+
+                <!-- Data -->
                 <%
-                response.setContentType("text/html");
-                Connection conn;
-                ResultSet res = null;
-
                 try {
                     Class.forName("com.mysql.cj.jdbc.Driver");
                 } catch (ClassNotFoundException e) {
@@ -38,105 +89,56 @@
 
                 try {
                     conn = DriverManager.getConnection(
-                            "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
-                            "admin",
-                            "nbusr123"
+                        "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
+                        "admin",
+                        "nbusr123"
                     );
+                    Statement query = conn.createStatement();
+                    res = query.executeQuery("SELECT * FROM part");
 
-                    Statement statement = conn.createStatement();
-                    res = conn.getMetaData().getColumns(
-                        null,
-                        null,
-                        "part",
-                        null
-                    );
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
 
                 if (res != null) {
+                    int colCount;
+                    // -----------------------
+                    // NECHYTAT!!! MUSI TU BYT 0, INAK SCRIPT NEBUDE FUNGOVAT
+                    // BLACK MAGIC WOODOO
+                    int btnId = 0;
+                    // -----------------------
                     try {
-                        boolean preskocId = true;
                         while (res.next()) {
-                            if (preskocId) {
-                                // No ID in table, first header will be PART
-                                %>
-                                <th>PART</th>
-                                <%
-                                preskocId = false;
-                                continue;
+                            colCount = res.getMetaData().getColumnCount();
+                            %>
+                            <tr>
+                            <%
+                            // Indexovanie začína od 1 ...
+
+                            for (int i = 1; i <= colCount; i++) {
+                                out.println("<td>" + res.getObject(i) + "</td>");
                             }
 
-                            String name = res.getString("COLUMN_NAME").toUpperCase();
-                            out.println("<th>" + name + "</th>");
-                        }
-                        out.println("<th>ACTION</th>");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-                %>
-            </tr>
-
-            <!-- Data -->
-            <%
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
-                    "admin",
-                    "nbusr123"
-                );
-                Statement query = conn.createStatement();
-                res = query.executeQuery("SELECT * FROM part");
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            if (res != null) {
-                int colCount;
-                // -----------------------
-                // NECHYTAT!!! MUSI TU BYT 0, INAK SCRIPT NEBUDE FUNGOVAT
-                // BLACK MAGIC WOODOO
-                int btnId = 0;
-                // -----------------------
-                try {
-                    while (res.next()) {
-                        colCount = res.getMetaData().getColumnCount();
-                        %>
-                        <tr>
-                        <%
-                        // Indexovanie začína od 1 ...
-
-                        for (int i = 1; i <= colCount; i++) {
-                            out.println("<td>" + res.getObject(i) + "</td>");
-                        }
-
-                        out.println("<td><button " +
+                            out.println("<td><button " +
+                                "class=\"update-buttons\"" +
                                 "type=\"button\" " +
                                 "id=\"" + btnId +
                                 "\"" + "onclick=\"expandRow(this.id)\"" +
                                 ">Expand" +
                                 "</button></td>");
-                        btnId++;
-                        %>
-                        </tr>
+                            btnId++;
+                            %>
+                            </tr>
 
-                    <%
+                        <%
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
-            }
-            %>
-        </table>
+                %>
+            </table>
+        </div>
     </div>
-</div>
 </body>
 </html>

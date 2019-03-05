@@ -1,31 +1,85 @@
 @import "part/addPart.css";
 @import "part/updatePart.css";
 @import "part/deletePart.css";
+@import "link/addLink.css";
+@import "link/updateLink.css";
+@import "link/deleteLink.css";
 
 #menu-container {
-    background-color: #398AA4;
+    background-color: #1565c0;
     text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    height: 60px;
+    height: 80px;
     padding: 15px;
 }
 
-#part-link-switcher {
-    width: 20%;
-    height: auto;
+#category-container {
+    width: 10%;
+    float: left;
+    text-align: right;
+}
+
+#part-span {
+    padding: 2px;
+}
+
+#link-span {
+    padding: 2px;
+}
+
+#connector-container {
+    width: 15%;
+    float: left;
     display: inline-block;
+    text-align: right;
+    padding-top: 20px;
+}
+
+#part-connector {
+    width: 380px;
+    height: 5px;
+    content: "";
+    position: absolute;
+    border-top: 1px solid;
+    border-color: red;
+    transform: rotate(3deg);
+    transform-origin: 0% 0%;
+}
+
+#link-connector{
+    width: 380px;
+    height: 28px;
+    content: "";
+    position: absolute;
+    border-top: 1px solid;
+    border-color: #1565c0;
+    transform: rotate(-3deg);
+    transform-origin: 0% 0%;
+    margin-top: 40px;
+}
+
+#options-container {
+    width: 50%;
     float: left;
 }
 
-#parts-mngmnt-container {
+#part-options-container {
     display: inline-block;
-    margin: 12px;
-    width: 55%;
-    float: left;
+    margin: 20px;
 }
 
-.part-category-span {
+#link-options-container {
+    display: inline-block;
+    margin: 20px;
+}
+
+.part-option-span {
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 3px;
+    text-align: center;
+}
+
+.link-option-span {
     padding-left: 10px;
     padding-right: 10px;
     border: 3px;
@@ -33,21 +87,19 @@
 }
 
 button {
-    padding: 3px;
+    padding: 10px;
+    border-radius: 10px;
+    border-width: 0px;
 }
 
 #title-div {
     width: 20%;
-    display: inline-block;
     margin: 12px;
+    padding: 10px;
     float: right;
-    font-size: 28px;
+    font-size: 32px;
+    font-weight: bold;
     text-shadow: 2px 2px 5px white;
-}
-
-.button {
-    background: transparent;
-    padding: 5px 10px;
 }
 
 #overviewPage-content-container {
@@ -55,6 +107,11 @@ button {
 }
 
 #part-overview-separator {
+    height: 20px;
+    margin: 20px;
+}
+
+#link-overview-separator {
     height: 20px;
     margin: 20px;
 }
@@ -67,8 +124,12 @@ table {
     border-collapse: collapse;
 }
 
+tr {
+    height: auto;
+}
+
 tr:nth-child(odd) {
-    background-color: #398AA4;
+    background-color: #039be5;
 }
 
 tr th {
@@ -81,4 +142,41 @@ tr th {
 td, th {
     border: 2px solid black;
     padding: 5px 10px;
+}
+
+.add-buttons {
+    width: 100%;
+    height: 30px;
+    padding: 3px;
+    border-radius: 10px;
+    border-width: 1px;
+    vertical-align: center;
+    text-align: center;
+}
+
+.update-buttons {
+    color: black;
+    width: 100px;
+    margin: 5px;
+    padding: 3px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+#part-delete-table tr:nth-child(odd) {
+    background-color: #039be5;
+}
+
+.delete-buttons {
+    color: red;
+    width: 100px;
+    margin: 5px;
+    padding: 3px;
+    border-color: black;
+    border-radius: 10px;
+    border-width: 0px;
+    text-shadow: 1px 1px 3px red;
+    box-shadow: 0px 0px 8px 2px red;
+    font-family: inherit;
+
 }

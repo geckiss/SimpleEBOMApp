@@ -1,4 +1,5 @@
-<%@ page import="java.sql.*" %><%--
+<%@ page import="java.sql.*" %>
+<%--
   Created by IntelliJ IDEA.
   User: Mato
   Date: 27.2.2019
@@ -10,6 +11,7 @@
 <head>
     <title>Simple EBOM App - Delete Part</title>
     <link rel="stylesheet" type="text/css" href="../../css/part/deletePart.css">
+    <script src="../../js/part/deletePart.js" ></script>
 </head>
 <body>
 <div id="deletePage-content-container">
@@ -22,7 +24,7 @@
     <div id="part-delete-separator"></div>
     <div id="delete-table-container">
 
-        <table>
+        <table id="part-delete-table">
             <tr>
                 <!-- Headers -->
                 <%
@@ -31,24 +33,24 @@
                     ResultSet res = null;
 
                     try {
-                        Class.forName("com.mysql.jdbc.Driver");
+                        Class.forName("com.mysql.cj.jdbc.Driver");
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
 
                     try {
                         conn = DriverManager.getConnection(
-                                "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
-                                "admin",
-                                "nbusr123"
+                            "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
+                            "admin",
+                            "nbusr123"
                         );
 
                         Statement statement = conn.createStatement();
                         res = conn.getMetaData().getColumns(
-                                null,
-                                null,
-                                "part",
-                                null
+                            null,
+                            null,
+                            "part",
+                            null
                         );
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -81,16 +83,16 @@
             <!-- Data -->
             <%
                 try {
-                    Class.forName("com.mysql.jdbc.Driver");
+                    Class.forName("com.mysql.cj.jdbc.Driver");
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
 
                 try {
                     conn = DriverManager.getConnection(
-                            "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
-                            "admin",
-                            "nbusr123"
+                        "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
+                        "admin",
+                        "nbusr123"
                     );
                     Statement query = conn.createStatement();
                     res = query.executeQuery("SELECT * FROM part");
@@ -105,28 +107,28 @@
                         int itemId = 1;
                         while (res.next()) {
                             colCount = res.getMetaData().getColumnCount();
-            %>
-            <tr>
-                <%
-                    // Indexovanie začína od 1 ...
+                        %>
+                        <tr>
+                            <%
+                            // Indexovanie začína od 1 ...
 
-                    for (int i = 1; i <= colCount; i++) {
-                %>
-                <td >
-                    <%= res.getObject(i)%>
-                </td>
-                <%
-                    }
-                %>
-                <td>
-                    <form action="DeletePart" method="post">
-                        <input type="number" value="<%= itemId++ %>" name="ID" disabled="true"/>
-                        <input type="submit" value="DELETE" name="DELETE" />
-                    </form>
-                </td>
-            </tr>
+                            for (int i = 1; i <= colCount; i++) {
+                        %>
+                        <td >
+                            <%= res.getObject(i)%>
+                        </td>
+                        <%
+                            }
+                        %>
+                        <td>
+                            <form method="post" action="DeletePart">
+                                <input type="number" name="ItemToDel" value="<%= itemId++ %>" disabled="disabled" />
+                                <input class="delete-buttons" type="submit" value="DELETE" name="DELETE" />
+                            </form>
+                        </td>
+                    </tr>
 
-            <%
+                    <%
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();

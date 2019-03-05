@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Parts Overview</title>
 </head>
 <body>
 <!--
@@ -16,11 +16,6 @@
 -->
 
 <div id="overviewPage-content-container">
-    <!--
-    <form action="" method="post">
-      <input type="submit" name="addButton" value="Add Part" />
-    </form>
-    -->
 
         <div id="part-overview-separator"></div>
         <div id="table-container">

@@ -1,12 +1,12 @@
 package parts;
 
+import base.BaseClass;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.*;
 
 @WebServlet("/UpdatePart")
@@ -29,54 +29,63 @@ public class UpdatePartServlet extends BaseClass {
             throws IOException, ServletException {
 
         String query = "UPDATE part SET ";
-        int itemId = Integer.parseInt(request.getParameter("ID"));
+        int itemId = -1;
+        if (!request.getParameter("ItemId").equals("")) {
+            itemId = Integer.parseInt(request.getParameter("ItemId"));
+        }
 
         String newType;
         if (!request.getParameter("Type").equals("")) {
             newType = request.getParameter("Type");
-            query += "type = newType,";
+            query += "type = \"" + newType + "\",";
         }
 
         String newName;
         if (!request.getParameter("Name").equals("")) {
             newName = request.getParameter("Name");
-            query += "name = newName,";
+            query += "name = \"" + newName + "\",";
         }
 
         int newLength;
         if (!request.getParameter("Length").equals("")) {
             newLength = Integer.parseInt(request.getParameter("Length"));
-            query += "length = newLength,";
+            query += "length = " + newLength + ",";
         }
 
 
-        int newWidth = Integer.parseInt(request.getParameter("Width"));
+        int newWidth;
         if (!request.getParameter("Width").equals("")) {
             newWidth = Integer.parseInt(request.getParameter("Width"));
-            query += "width = newWidth,";
+            query += "width = " + newWidth + ",";
         }
 
         double newWeight;
         if (!request.getParameter("Weight").equals("")) {
             newWeight = Double.parseDouble(request.getParameter("Weight"));
-            query += "weight = newWeight,";
+            query += "weight = " + newWeight + ",";
         }
 
         double newCost;
         if (!request.getParameter("Cost").equals("")) {
             newCost = Double.parseDouble(request.getParameter("Cost"));
-            query += "cost = newCost,";
+            query += "cost = " + newCost + ",";
         }
 
+        boolean executeUpdate = true;
         if (query.endsWith(",")) {
             query = query.substring(0, query.length() - 1);
+        } else {
+            if (query.endsWith(" ")) {
+                executeUpdate = false;
+            }
         }
 
-        query += "WHERE id = " + itemId;
+        if (executeUpdate) {
+            query += " WHERE id = " + itemId;
 
-        response.setContentType("text/html");
+            response.setContentType("text/html");
 
-        Connection conn = null;
+            Connection conn = null;
 
             try {
                 Class.forName(driver);
@@ -86,18 +95,17 @@ public class UpdatePartServlet extends BaseClass {
 
             try {
                 conn = DriverManager.getConnection(
-                    url,
-                    user,
-                    pass
+                        url,
+                        user,
+                        pass
                 );
 
                 Statement statement = conn.createStatement();
-                boolean update_ok = statement.execute(query);
+                statement.execute(query);
 
-                if (update_ok) {
-                    request.setAttribute("res_of_upd", "Part updated SUCCESSFULLY");
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
-                }
+                request.setAttribute("res_of_upd", "Part updated SUCCESSFULLY");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -109,6 +117,6 @@ public class UpdatePartServlet extends BaseClass {
                     // logger.warn("Could not close JDBC Connection", e);
                 }
             }
-
+        }
     }
 }

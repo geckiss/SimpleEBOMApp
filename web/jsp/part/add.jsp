@@ -46,7 +46,6 @@
                             <input type="number" name="Width" min="0" max="4,294,967,295">
                         </td>
                     </tr>
-
                     <tr>
                         <td>Weight</td>
                         <td>
@@ -59,10 +58,9 @@
                             <input type="number" name="Cost" min="-2,147,483,648" max="2,147,483,647">
                         </td>
                     </tr>
-
                     <tr>
                         <td colspan="2">
-                            <input id="add-part-button" type="submit" value="Add new part" />
+                            <input class="add-buttons" type="submit" value="Add new part" />
                         </td>
                     </tr>
                 </table>

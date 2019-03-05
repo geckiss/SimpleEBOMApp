@@ -13,44 +13,33 @@
   <head>
     <title>Simple EBOM App</title>
     <link href="${pageContext.request.contextPath}/css/index_style.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js//index.js" > </script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js//part/update_part.js" > </script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/index.js" > </script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/part/updatePart.js" />
+      <script type="text/javascript" src="${pageContext.request.contextPath}/js/link/updateLink.js" />
   </head>
   <body>
   <%
   %>
 
     <div id="menu-container">
-      <span id="part-link-switcher">
-        <div id="part-span">
-          <button type="button">Parts Management</button>
-        </div>
-        <div id="link-span">
-          <button type="button">Links Management</button>
-        </div>
-      </span>
+      <div id="category-container">
+        <span id="part-link-switcher">
+          <div id="part-span">
+            <button id="part-category-button" type="button" onclick="chooseCategory(this.id)" >Parts Management</button>
+          </div>
+          <div id="link-span">
+            <button id="link-category-button" type="button" onclick="chooseCategory(this.id)" >Links Management</button>
+          </div>
+        </span>
+      </div>
 
-      <div id="parts-mngmnt-container">
-        <span class="part-category-span">
-          <button id="overview-button" type="button" onclick="chooseOption(this.id)">
-              Overview
-          </button>
-        </span>
-        <span class="part-category-span">
-          <button id="add-button" type="button" onclick="chooseOption(this.id)">
-              Add
-          </button>
-        </span>
-        <span class="part-category-span">
-          <button id="update-button" type="button" onclick="chooseOption(this.id)">
-              Update
-          </button>
-        </span>
-        <span class="part-category-span">
-          <button id="delete-button" type="button" onclick="chooseOption(this.id)">
-              Delete
-          </button>
-        </span>
+      <div id="connector-container">
+        <div id="part-connector"></div>
+        <div id="link-connector"></div>
+      </div>
+
+      <div id="options-container">
+        <jsp:include page="jsp/part/p_option_container.jsp"></jsp:include>
       </div>
 
       <div id="title-div">Simple EBOM App</div>

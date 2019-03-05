@@ -1,8 +1,7 @@
 // tableId = update table
 // clickedButtonId = row index(base is 0)
 
-var expandedRows = [];
-// TODO nejde, dorob
+// TODO funguje len prvy riadok tabulky
 function expandRow(clickedButtonId) {
 
     /*
@@ -10,25 +9,25 @@ function expandRow(clickedButtonId) {
         expandedRows[clickedButtonId] = 1;
     */
         var table = document.getElementById("part-update-table");
-        var expandedTable;
+        var colWidth = table.getElementsByTagName("td").width;
 
         // Header is at 0, need to skip header and row with clicked button
         var row = table.insertRow(clickedButtonId + 2);
         // TODO co sa stane, ak kliknem na posledny riadok?
-        var cols = 9;
-
+        var cols = 8;
 
         var cell;
         var input;
-        var btnSpan;
+        var btnDiv;
         var deexpandButton;
+
         // Forma, ktora ma 6 inputov
         // Tuto formu musim dat do cellu ktora colspan = 7
         var updateForm = document.createElement("form");
         updateForm.action = "UpdatePart";
         updateForm.method = "post";
-        // Do tej formy dam tabulku so stlpcami
 
+        // Do tej formy dam tabulku so stlpcami
         var formTable = document.createElement("table");
         var formTableRow = document.createElement("tr");
         var formTableColumn;
@@ -42,14 +41,14 @@ function expandRow(clickedButtonId) {
                 // Len ID-cko
                 var itemId = document.createElement("input");
                 itemId.type = "number";
-                itemId.name = "ID";
-                itemId.value = clickedButtonId + 1;
+                itemId.name = "ItemId";
+                itemId.value = (clickedButtonId + 1);
                 itemId.disabled = true;
                 formTableColumn.appendChild(itemId);
                 formTableRow.appendChild(formTableColumn);
             } else {
 
-                if (i === 1 || i === 2 || i === 7) {
+                if (i === 1 || i === 2) {
 
                     // Type a Name je String
                     input.type = "text";
@@ -57,8 +56,6 @@ function expandRow(clickedButtonId) {
                         input.name = "Type";
                     } else if (i === 2) {
                         input.name = "Name";
-                    } else {
-                        input.type = "Comment"
                     }
                     formTableColumn.appendChild(input);
                     formTableRow.appendChild(formTableColumn);
@@ -69,28 +66,46 @@ function expandRow(clickedButtonId) {
                         // Teraz tu insertnutu cell povazuje za 2. stlpec
                         cell = row.insertCell(0);
                         // Teraz uz nie
-                        cell.colSpan = 9;
+                        cell.colSpan = 8;
 
                         // Kedze som v poslednom stlpci, posledny stlpec budu 2 buttony, ktore tiez patria do form
-                        btnSpan = document.createElement("span");
+                        btnDiv = document.createElement("div");
                         deexpandButton = document.createElement("button");
                         deexpandButton.type = "button";
                         deexpandButton.value = "De-expand";
-                        deexpandButton.addEventListener('click', function (clickedButtonId) {
+                        deexpandButton.onclick = function() {
                             var table = document.getElementById("part-update-table");
-                            var row = table.insertRow(clickedButtonId + 2);
-                            table.deleteRow(row);
-                            expandedRows[clickedButtonId] = 0;
-                        });
+                            table.deleteRow(clickedButtonId + 2);
+                        };
 
                         input.type = "submit";
                         input.name = "update-button";
                         input.value = "Update";
+                        /*
+                        // Ako sem dostat vsetky hodnoty z inputov
+                        input.onclick = function() {
+                            var http = new XMLHttpRequest();
+                            var url = 'UpdatePart';
+                            var params = 'ID=' + (clickedButtonId + 1);
+                            params += "&Type"
+                            http.open('POST', url, true);
 
-                        btnSpan.appendChild(deexpandButton);
-                        btnSpan.appendChild(input);
+                            //Send the proper header information along with the request
+                            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-                        formTableColumn.appendChild(btnSpan);
+                            http.onreadystatechange = function() {//Call a function when the state changes.
+                                if(http.readyState == 4 && http.status == 200) {
+                                    alert(http.responseText);
+                                }
+                            };
+                            http.send(params);
+                        };
+                        */
+
+                        btnDiv.appendChild(deexpandButton);
+                        btnDiv.appendChild(input);
+
+                        formTableColumn.appendChild(btnDiv);
 
                         // ˇ Nechytat ˇ
                         formTableRow.appendChild(formTableColumn);
