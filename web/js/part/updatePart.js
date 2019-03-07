@@ -1,18 +1,31 @@
 // tableId = update table
 // clickedButtonId = row index(base is 0)
 
-// TODO funguje len prvy riadok tabulky
-function expandRow(clickedButtonId) {
+var expandedRows = [];
 
+// TODO funguje len prvy riadok tabulky
+function expandPartRow(clickedButtonId) {
+
+    var rowIndex = parseInt(clickedButtonId);
+    var table = document.getElementById("part-update-table");
     /*
-    if (expandedRows[clickedButtonId] === 0) {
-        expandedRows[clickedButtonId] = 1;
+    // Lebo mozem mat expandnutych viacej riadkov, to chcem zachovat
+    var oldExpandedRows = expandedRows.slice();
+
+    for (var i = 0; i < table.getElementsByTagName("tr").length; i++) {
+        expandedRows.push(0);
+    }
+    // Stare pole s hodnotami skopirujem do noveho, ktore moze byt zvacsene alebo zmensene
+    expandedRows = oldExpandedRows.slice(0, expandedRows.length);
+
+    if (expandedRows[rowIndex] === 0) {
+        expandedRows[rowIndex] = 1;
     */
-        var table = document.getElementById("part-update-table");
+
         var colWidth = table.getElementsByTagName("td").width;
 
         // Header is at 0, need to skip header and row with clicked button
-        var row = table.insertRow(clickedButtonId + 2);
+        var row = table.insertRow(rowIndex + 2);
         // TODO co sa stane, ak kliknem na posledny riadok?
         var cols = 8;
 
@@ -24,8 +37,10 @@ function expandRow(clickedButtonId) {
         // Forma, ktora ma 6 inputov
         // Tuto formu musim dat do cellu ktora colspan = 7
         var updateForm = document.createElement("form");
-        updateForm.action = "UpdatePart";
+        updateForm.setAttribute("id", "part-update-form");
         updateForm.method = "post";
+        updateForm.action = "UpdatePart";
+
 
         // Do tej formy dam tabulku so stlpcami
         var formTable = document.createElement("table");
@@ -41,8 +56,9 @@ function expandRow(clickedButtonId) {
                 // Len ID-cko
                 var itemId = document.createElement("input");
                 itemId.type = "number";
-                itemId.name = "ItemId";
-                itemId.value = (clickedButtonId + 1);
+                itemId.name = "kurvafunguj";
+                itemId.value = table.rows[rowIndex + 1].cells[0].innerHTML;
+                console.log(itemId);
                 itemId.disabled = true;
                 formTableColumn.appendChild(itemId);
                 formTableRow.appendChild(formTableColumn);
@@ -75,7 +91,8 @@ function expandRow(clickedButtonId) {
                         deexpandButton.value = "De-expand";
                         deexpandButton.onclick = function() {
                             var table = document.getElementById("part-update-table");
-                            table.deleteRow(clickedButtonId + 2);
+                            //expandedRows[rowIndex] = 0;
+                            table.deleteRow(rowIndex + 2);
                         };
 
                         input.type = "submit";
@@ -142,5 +159,5 @@ function expandRow(clickedButtonId) {
         }
 
 
-    // }
+    //}
 }

@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="SimpleEBOMApp:war exploded">
+  <artifact type="exploded-war" name="SimpleEBOMApp_war_exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/SimpleEBOMApp_war_exploded</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="SimpleEBOMApp/web/Web" />

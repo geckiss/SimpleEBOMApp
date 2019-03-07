@@ -1,5 +1,5 @@
-<%@ page import="com.mysql.cj.exceptions.MysqlErrorNumbers" %>
-<%@ page import="java.io.PrintWriter" %><%--
+
+<%--
   Created by IntelliJ IDEA.
   User: Mato
   Date: 26.2.2019
@@ -7,28 +7,25 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.sql.*" %>
 
 <html>
   <head>
     <title>Simple EBOM App</title>
     <link href="${pageContext.request.contextPath}/css/index_style.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/index.js" > </script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/part/updatePart.js" />
-      <script type="text/javascript" src="${pageContext.request.contextPath}/js/link/updateLink.js" />
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/part/updatePart.js" > </script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/link/updateLink.js" > </script>
   </head>
   <body>
-  <%
-  %>
 
     <div id="menu-container">
       <div id="category-container">
         <span id="part-link-switcher">
           <div id="part-span">
-            <button id="part-category-button" type="button" onclick="chooseCategory(this.id)" >Parts Management</button>
+            <button class="menu-buttons" id="part-category-button" type="button" onclick="chooseCategory(this.id)" >Parts Management</button>
           </div>
           <div id="link-span">
-            <button id="link-category-button" type="button" onclick="chooseCategory(this.id)" >Links Management</button>
+            <button class="menu-buttons" id="link-category-button" type="button" onclick="chooseCategory(this.id)" >Links Management</button>
           </div>
         </span>
       </div>

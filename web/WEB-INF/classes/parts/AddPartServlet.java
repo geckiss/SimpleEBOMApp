@@ -113,6 +113,7 @@ public class AddPartServlet extends BaseClass {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
+        // TODO osetri prazdne parametre
         String type = request.getParameter("Type");
         String name = request.getParameter("Name");
         int length = Integer.parseInt(request.getParameter("Length"));

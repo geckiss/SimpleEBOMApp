@@ -1,4 +1,6 @@
 <%@ page import="java.sql.*" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Vector" %>
 <%--
   Created by IntelliJ IDEA.
   User: Mato
@@ -20,8 +22,6 @@
       <input type="submit" name="addButton" value="Add Part" />
     </form>
     -->
-
-    <div id="part-delete-separator"></div>
     <div id="delete-table-container">
 
         <table id="part-delete-table">
@@ -104,7 +104,8 @@
                 if (res != null) {
                     int colCount;
                     try {
-                        int itemId = 1;
+                        int itemId = 0; // ID z DB
+
                         while (res.next()) {
                             colCount = res.getMetaData().getColumnCount();
                         %>
@@ -118,11 +119,16 @@
                             <%= res.getObject(i)%>
                         </td>
                         <%
+                               if (i == 1) {
+                                   // TODO namiesto 5 ziskat z res hodnotu prveho td(idcko part-u)
+                                   itemId = res.getInt(1);
+                               }
                             }
+
                         %>
                         <td>
                             <form method="post" action="DeletePart">
-                                <input type="number" name="ItemToDel" value="<%= itemId++ %>" disabled="disabled" />
+                                <input type="number" name="ItemToDel" value="<%= itemId %>" disabled="disabled" />
                                 <input class="delete-buttons" type="submit" value="DELETE" name="DELETE" />
                             </form>
                         </td>

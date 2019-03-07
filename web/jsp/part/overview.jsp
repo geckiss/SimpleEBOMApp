@@ -17,7 +17,7 @@
 
 <div id="overviewPage-content-container">
 
-        <div id="part-overview-separator"></div>
+
         <div id="table-container">
             <table>
                 <tr>

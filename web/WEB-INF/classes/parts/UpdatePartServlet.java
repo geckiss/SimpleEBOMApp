@@ -24,15 +24,20 @@ public class UpdatePartServlet extends BaseClass {
         driver = "com.mysql.cj.jdbc.Driver";
     }
 
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {    }
+
     /// Update
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
         String query = "UPDATE part SET ";
+
         int itemId = -1;
-        if (!request.getParameter("ItemId").equals("")) {
-            itemId = Integer.parseInt(request.getParameter("ItemId"));
-        }
+        //if (!request.getParameter("kurvafunguj").equals("")) {
+            itemId = Integer.parseInt(request.getParameter("kurvafunguj"));
+        //}
 
         String newType;
         if (!request.getParameter("Type").equals("")) {
@@ -51,7 +56,6 @@ public class UpdatePartServlet extends BaseClass {
             newLength = Integer.parseInt(request.getParameter("Length"));
             query += "length = " + newLength + ",";
         }
-
 
         int newWidth;
         if (!request.getParameter("Width").equals("")) {

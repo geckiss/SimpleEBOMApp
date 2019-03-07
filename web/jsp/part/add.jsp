@@ -14,10 +14,7 @@
 </head>
 <body>
 <div id="addPage-content-container">
-    <div id="part-add-separator">
-        <span id="add-successful"></span>
-        <span id="add-unsuccessful"></span>
-    </div>
+
     <div id="part-add-form-container">
             <form method="post" action="AddPart">
                 <span class="result">${res_of_add}</span>

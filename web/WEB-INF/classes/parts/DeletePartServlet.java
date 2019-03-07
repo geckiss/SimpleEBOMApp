@@ -41,9 +41,7 @@ public class DeletePartServlet extends BaseClass {
             executeDelete = false;
         }
 
-
         if (executeDelete) {
-
             response.setContentType("text/html");
             Connection conn = null;
 
@@ -65,7 +63,6 @@ public class DeletePartServlet extends BaseClass {
 
                 request.setAttribute("res_of_del", "Part deleted SUCCESSFULLY");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
-
 
             } catch (SQLException e) {
                 e.printStackTrace();

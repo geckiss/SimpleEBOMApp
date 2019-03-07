@@ -10,12 +10,18 @@
     text-align: center;
     height: 80px;
     padding: 15px;
+    border-radius: 5px;
 }
 
 #category-container {
-    width: 10%;
+    width: 11%;
     float: left;
     text-align: right;
+}
+
+#part-category-button, #overview-button, #l-overview-button {
+    background: #ff3300;
+    color: white;
 }
 
 #part-span {
@@ -35,22 +41,22 @@
 }
 
 #part-connector {
-    width: 380px;
+    width: 360px;
     height: 5px;
     content: "";
     position: absolute;
-    border-top: 1px solid;
-    border-color: red;
+    border-top: 2px solid;
+    border-color: #ff3300;
     transform: rotate(3deg);
     transform-origin: 0% 0%;
 }
 
 #link-connector{
-    width: 380px;
+    width: 360px;
     height: 28px;
     content: "";
     position: absolute;
-    border-top: 1px solid;
+    border-top: 2px solid;
     border-color: #1565c0;
     transform: rotate(-3deg);
     transform-origin: 0% 0%;
@@ -86,6 +92,11 @@
     text-align: center;
 }
 
+.menu-buttons {
+    background: white;
+    font-weight: bold;
+}
+
 button {
     padding: 10px;
     border-radius: 10px;
@@ -93,31 +104,29 @@ button {
 }
 
 #title-div {
+    font-family: 'Open Sans', sans-serif;
+    text-decoration: none;
     width: 20%;
     margin: 12px;
     padding: 10px;
     float: right;
     font-size: 32px;
     font-weight: bold;
-    text-shadow: 2px 2px 5px white;
+    text-shadow: #EDEDED 1px 1px 0;
 }
 
 #overviewPage-content-container {
     margin: 0 auto;
 }
 
-#part-overview-separator {
-    height: 20px;
-    margin: 20px;
-}
-
-#link-overview-separator {
-    height: 20px;
-    margin: 20px;
-}
-
 #content-container {
+    margin-top: 40px;
+    margin-bottom: 40px;
     display: -webkit-flex;
+}
+
+body {
+    background-image: linear-gradient(to right, #5ea1ed, white, white, white, white, white ,white, white, #5ea1ed);
 }
 
 table {

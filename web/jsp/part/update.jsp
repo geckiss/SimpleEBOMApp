@@ -10,19 +10,11 @@
 <html>
 <head>
     <title>Simple EBOM App - Update Part</title>
-    <script type="text/javascript" src="../../js/part/updatePart.js" />
+    <script src="../../js/part/updatePart.js" > </script>
 </head>
 <body>
     <div id="updatePage-content-container">
-        <!--
-        <form action="" method="post">
-          <input type="submit" name="addButton" value="Add Part" />
-        </form>
-        -->
-
-        <div id="part-update-separator"></div>
         <div id="update-table-container">
-
             <table id="part-update-table">
                 <tr>
                     <!-- Headers -->
@@ -39,9 +31,9 @@
 
                     try {
                         conn = DriverManager.getConnection(
-                                "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
-                                "admin",
-                                "nbusr123"
+                            "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
+                            "admin",
+                            "nbusr123"
                         );
 
                         Statement statement = conn.createStatement();
@@ -122,14 +114,12 @@
                             out.println("<td><button " +
                                 "class=\"update-buttons\"" +
                                 "type=\"button\" " +
-                                "id=\"" + btnId +
-                                "\"" + "onclick=\"expandRow(this.id)\"" +
+                                "id=\"" + btnId++ +
+                                "\"" + "onclick=\"expandPartRow(this.id)\"" +
                                 ">Expand" +
                                 "</button></td>");
-                            btnId++;
                             %>
                             </tr>
-
                         <%
                         }
                     } catch (SQLException e) {
