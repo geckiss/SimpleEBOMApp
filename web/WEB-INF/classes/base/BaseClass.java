@@ -29,9 +29,9 @@ public abstract class BaseClass extends HttpServlet {
 
         try {
             conn = DriverManager.getConnection(
-                    url,
-                    user,
-                    pass
+                url,
+                user,
+                pass
             );
 
             return conn;

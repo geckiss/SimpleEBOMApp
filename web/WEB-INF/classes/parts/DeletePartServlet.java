@@ -24,56 +24,42 @@ public class DeletePartServlet extends BaseClass {
         driver = "com.mysql.cj.jdbc.Driver";
     }
 
-    /// Update
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        String query = "DELETE FROM part ";
-        int itemId = -1;
-        if (!request.getParameter("ItemToDel").equals("")) {
-            itemId = Integer.parseInt(request.getParameter("ItemToDel"));
-        }
+        String itemId = request.getParameter("ItemId");
 
-        boolean executeDelete = true;
-        if (itemId != -1) {
-            query += "WHERE id = " + itemId;
-        } else {
-            executeDelete = false;
-        }
-
-        if (executeDelete) {
+        if (itemId != null && !itemId.equals("")) {
             response.setContentType("text/html");
             Connection conn = null;
-
+            PreparedStatement stmt = null;
             try {
-                Class.forName(driver);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                conn = DriverManager.getConnection(
-                    url,
-                    user,
-                    pass
-                );
-
-                Statement statement = conn.createStatement();
-                statement.execute(query);
-
-                request.setAttribute("res_of_del", "Part deleted SUCCESSFULLY");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                conn = myCreateConnection(driver, url, user, pass);
+                stmt = conn.prepareStatement("DELETE FROM part WHERE id = ?");
+                stmt.setString(1, itemId);
+                stmt.execute();
 
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
                 try {
-                    // if null ???
-                    conn.close();
-                } catch (Throwable e) {
-                    // logger.warn("Could not close JDBC Connection", e);
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                } catch (Exception e) {
+                    // log this error
+                }
+                try {
+                    if (conn != null) {
+                        conn.close();
+                    }
+                } catch (Exception e) {
+                    // log this error
                 }
             }
         }
+
+        request.setAttribute("res_of_del", "Part deleted SUCCESSFULLY");
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 }

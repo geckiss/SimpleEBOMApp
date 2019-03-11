@@ -126,7 +126,7 @@ button {
 }
 
 body {
-    background-image: linear-gradient(to right, #5ea1ed, white, white, white, white, white ,white, white, #5ea1ed);
+    background-image: linear-gradient(to right, #5ea1ed, #bad7f7, #e8f2fc, white, white, white, white, white, white, white, white, white, white, white, white, white ,#e8f2fc, #bad7f7, #5ea1ed);
 }
 
 table {

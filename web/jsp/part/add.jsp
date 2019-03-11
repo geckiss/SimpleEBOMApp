@@ -46,13 +46,13 @@
                     <tr>
                         <td>Weight</td>
                         <td>
-                            <input type="number" name="Weight" min="0" max="4,294,967,295">
+                            <input type="number" step="0.01" name="Weight" min="0" max="4,294,967,295">
                         </td>
                     </tr>
                     <tr>
                         <td>Cost</td>
                         <td>
-                            <input type="number" name="Cost" min="-2,147,483,648" max="2,147,483,647">
+                            <input type="number" step="0.01" name="Cost" min="0" max="4,294,967,295">
                         </td>
                     </tr>
                     <tr>

@@ -13,7 +13,6 @@
 <head>
     <title>Simple EBOM App - Delete Part</title>
     <link rel="stylesheet" type="text/css" href="../../css/part/deletePart.css">
-    <script src="../../js/part/deletePart.js" ></script>
 </head>
 <body>
 <div id="deletePage-content-container">
@@ -128,7 +127,7 @@
                         %>
                         <td>
                             <form method="post" action="DeletePart">
-                                <input type="number" name="ItemToDel" value="<%= itemId %>" disabled="disabled" />
+                                <input type="number" name="ItemId" value="<%= itemId %>" />
                                 <input class="delete-buttons" type="submit" value="DELETE" name="DELETE" />
                             </form>
                         </td>

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.*;
+import java.util.Enumeration;
 
 @WebServlet("/UpdatePart")
 public class UpdatePartServlet extends BaseClass {
@@ -35,43 +36,46 @@ public class UpdatePartServlet extends BaseClass {
         String query = "UPDATE part SET ";
 
         int itemId = -1;
-        //if (!request.getParameter("kurvafunguj").equals("")) {
-            itemId = Integer.parseInt(request.getParameter("kurvafunguj"));
-        //}
+        String s = request.getParameter("ItemId");
+        if (s != null && !s.equals("")) {
+            itemId = Integer.parseInt(request.getParameter("ItemId"));
+        }
 
-        String newType;
-        if (!request.getParameter("Type").equals("")) {
-            newType = request.getParameter("Type");
+        String newType = request.getParameter("Type");
+        if (newType != null && !newType.equals("")) {
             query += "type = \"" + newType + "\",";
         }
 
-        String newName;
-        if (!request.getParameter("Name").equals("")) {
-            newName = request.getParameter("Name");
+        String newName = request.getParameter("Name");
+        if (newName != null && !newName.equals("")) {
             query += "name = \"" + newName + "\",";
         }
 
         int newLength;
-        if (!request.getParameter("Length").equals("")) {
-            newLength = Integer.parseInt(request.getParameter("Length"));
+        s = request.getParameter("Length");
+        if (s != null && !s.equals("")) {
+            newLength = Integer.parseInt(s);
             query += "length = " + newLength + ",";
         }
 
         int newWidth;
-        if (!request.getParameter("Width").equals("")) {
-            newWidth = Integer.parseInt(request.getParameter("Width"));
+        s = request.getParameter("Width");
+        if (s != null && !s.equals("")) {
+            newWidth = Integer.parseInt(s);
             query += "width = " + newWidth + ",";
         }
 
         double newWeight;
-        if (!request.getParameter("Weight").equals("")) {
-            newWeight = Double.parseDouble(request.getParameter("Weight"));
+        s = request.getParameter("Weight");
+        if (s != null && !s.equals("")) {
+            newWeight = Double.parseDouble(s);
             query += "weight = " + newWeight + ",";
         }
 
         double newCost;
-        if (!request.getParameter("Cost").equals("")) {
-            newCost = Double.parseDouble(request.getParameter("Cost"));
+        s = request.getParameter("Cost");
+        if (s != null && !s.equals("")) {
+            newCost = Double.parseDouble(s);
             query += "cost = " + newCost + ",";
         }
 
@@ -87,6 +91,7 @@ public class UpdatePartServlet extends BaseClass {
         if (executeUpdate) {
             query += " WHERE id = " + itemId;
 
+
             response.setContentType("text/html");
 
             Connection conn = null;
@@ -98,10 +103,11 @@ public class UpdatePartServlet extends BaseClass {
             }
 
             try {
+
                 conn = DriverManager.getConnection(
-                        url,
-                        user,
-                        pass
+                    url,
+                    user,
+                    pass
                 );
 
                 Statement statement = conn.createStatement();

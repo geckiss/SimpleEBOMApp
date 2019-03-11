@@ -3,7 +3,6 @@
 
 var expandedRows = [];
 
-// TODO funguje len prvy riadok tabulky
 function expandPartRow(clickedButtonId) {
 
     var rowIndex = parseInt(clickedButtonId);
@@ -56,10 +55,10 @@ function expandPartRow(clickedButtonId) {
                 // Len ID-cko
                 var itemId = document.createElement("input");
                 itemId.type = "number";
-                itemId.name = "kurvafunguj";
+                itemId.name = "ItemId";
                 itemId.value = table.rows[rowIndex + 1].cells[0].innerHTML;
                 console.log(itemId);
-                itemId.disabled = true;
+                //itemId.disabled = true;
                 formTableColumn.appendChild(itemId);
                 formTableRow.appendChild(formTableColumn);
             } else {
@@ -142,10 +141,12 @@ function expandPartRow(clickedButtonId) {
 
                             case 5:
                                 input.name = "Weight";
+                                input.step = "0.01";
                                 break;
 
                             case 6:
                                 input.name = "Cost";
+                                input.step = "0.01";
                                 break;
                         }
                         input.type = "number";
