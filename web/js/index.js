@@ -36,6 +36,11 @@ function chooseOption(eventSourceId) {
             desiredContentContainer = "overviewPage";
             break;
 
+        case "l-tree-button":
+            url = "jsp/link/link_tree.jsp";
+            desiredContentContainer = "linkTree";
+            break;
+
         case "l-add-button":
             url = "jsp/link/add.jsp";
             desiredContentContainer = "addPage";
@@ -126,10 +131,11 @@ function chooseCategory(eventSourceId) {
         if (actualOptionsContainer === "part-options-container") {
             document.getElementById("part-connector").style.borderColor = "#1565c0";
             document.getElementById("link-connector").style.borderColor = "red";
+            document.getElementById("part-connector").style.width = "305px";
+            document.getElementById("link-connector").style.width = "305px";
             clickedBtn = document.getElementById("link-category-button");
             clickedBtn.style.backgroundColor = "#ff3300";
             clickedBtn.style.color = "white";
-
             clickedBtn.style.textShadow = "2px 2px 2px 2px #ff9933"
             clickedBtn = document.getElementById("part-category-button");
             clickedBtn.style.backgroundColor = "white";
@@ -138,6 +144,8 @@ function chooseCategory(eventSourceId) {
         } else {
             document.getElementById("part-connector").style.borderColor = "red";
             document.getElementById("link-connector").style.borderColor = "#1565c0";
+            document.getElementById("part-connector").style.width = "360px";
+            document.getElementById("link-connector").style.width = "360px";
             clickedBtn = document.getElementById("part-category-button");
             clickedBtn.style.backgroundColor = "#ff3300";
             clickedBtn.style.color = "white";
