@@ -1,6 +1,7 @@
 @import "part/addPart.css";
 @import "part/updatePart.css";
 @import "part/deletePart.css";
+@import "link/linkTree.css";
 @import "link/addLink.css";
 @import "link/updateLink.css";
 @import "link/deleteLink.css";
