@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.*;
-import java.util.Enumeration;
 
 @WebServlet("/UpdatePart")
 public class UpdatePartServlet extends BaseClass {
@@ -29,7 +28,6 @@ public class UpdatePartServlet extends BaseClass {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {    }
 
-    /// Update
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
@@ -91,9 +89,7 @@ public class UpdatePartServlet extends BaseClass {
         if (executeUpdate) {
             query += " WHERE id = " + itemId;
 
-
             response.setContentType("text/html");
-
             Connection conn = null;
 
             try {
@@ -103,7 +99,6 @@ public class UpdatePartServlet extends BaseClass {
             }
 
             try {
-
                 conn = DriverManager.getConnection(
                     url,
                     user,
@@ -115,7 +110,6 @@ public class UpdatePartServlet extends BaseClass {
 
                 request.setAttribute("res_of_upd", "Part updated SUCCESSFULLY");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
-
 
             } catch (SQLException e) {
                 e.printStackTrace();

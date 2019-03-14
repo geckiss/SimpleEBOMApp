@@ -2,10 +2,6 @@ var actualContentContainer = "overviewPage-content-container";
 var actualOptionsContainer = "part-options-container";
 var actualButton = "overview-button";
 
-function gebi(elementId) {
-    return document.getElementById(elementId);
-}
-
 function chooseOption(eventSourceId) {
     var xhr = new XMLHttpRequest();
     var url;
@@ -67,25 +63,22 @@ function chooseOption(eventSourceId) {
         xhr.open('GET', url);
 
         xhr.onreadystatechange = function () {
-            var DONE = 4; // readyState 4 means the request is done.
-            var OK = 200; // status 200 is a successful return.
+            var DONE = 4;
+            var OK = 200;
             if (xhr.readyState === DONE) {
                 if (xhr.status === OK) {
-                    document.getElementById("content-container").innerHTML =
-                        this.responseText;  // Response from URL
+                    document.getElementById("content-container").innerHTML = this.responseText;
                     actualContentContainer = desiredContentContainer;
                 } else {
-                    console.log('Error: ' + xhr.status); // An error occurred during the request.
+                    console.log('Error: ' + xhr.status);
                 }
             }
         };
         xhr.send(null);
     }
-
 }
 
 function changeButtonAppearance(oldButtonId, newButtonId) {
-    console.log("CHANGING COLOR: " + oldButtonId + ", " + newButtonId);
     var oldBtn = document.getElementById(oldButtonId);
     oldBtn.style.backgroundColor = "white";
     oldBtn.style.color = "black";
@@ -121,10 +114,6 @@ function chooseCategory(eventSourceId) {
             actualButton = "l-overview-button"; // Aby fungovali zmeny farieb
             break;
     }
-    console.log("URL Category: " + urlCategory);
-    console.log("URL Content: " + urlContent);
-    console.log("Actual options container: " + actualOptionsContainer);
-    console.log("Desired options container: " + desiredOptionsContainer);
 
     if (actualOptionsContainer !== desiredOptionsContainer) {
         // Po zmene kategorie zmenim aj content kontajner, inak by napr. z delete do delete nefungovalo
@@ -136,10 +125,11 @@ function chooseCategory(eventSourceId) {
             clickedBtn = document.getElementById("link-category-button");
             clickedBtn.style.backgroundColor = "#ff3300";
             clickedBtn.style.color = "white";
-            clickedBtn.style.textShadow = "2px 2px 2px 2px #ff9933"
+            clickedBtn.style.textShadow = "2px 2px 2px 2px #ff9933";
             clickedBtn = document.getElementById("part-category-button");
             clickedBtn.style.backgroundColor = "white";
             clickedBtn.style.color = "black";
+            clickedBtn.style.textShadow = "none";
 
         } else {
             document.getElementById("part-connector").style.borderColor = "red";
@@ -149,55 +139,44 @@ function chooseCategory(eventSourceId) {
             clickedBtn = document.getElementById("part-category-button");
             clickedBtn.style.backgroundColor = "#ff3300";
             clickedBtn.style.color = "white";
-            clickedBtn.style.textShadow = "2px 2px 2px 2px #ff9933"
+            clickedBtn.style.textShadow = "2px 2px 2px 2px #ff9933";
             clickedBtn = document.getElementById("link-category-button");
             clickedBtn.style.backgroundColor = "white";
             clickedBtn.style.color = "black";
             clickedBtn.style.textShadow = "none";
         }
 
-
         actualOptionsContainer = desiredOptionsContainer.slice();
 
         xhr1.open('GET', urlCategory);
         xhr1.onreadystatechange = function() {
-            //console.log("PRVY READY STATE CHANGE FUNGUJE");
-            var DONE = 4; // readyState 4 means the request is done.
-            var OK = 200; // status 200 is a successful return.
-            //console.log("DONE OK: " + DONE + " " + OK);
+            var DONE = 4;
+            var OK = 200;
             if (xhr1.readyState === DONE) {
                 if (xhr1.status === OK) {
-                    // Container pre containery kategorii
                     document.getElementById("options-container").innerHTML = this.responseText;
                 } else {
-                    console.log('Error: ' + xhr1.status); // An error occurred during the request.
+                    console.log('Error: ' + xhr1.status);
                 }
             }
         };
         xhr1.send(null);
 
         var xhr2 = new XMLHttpRequest();
-        //console.log("Actual content container: " + actualContentContainer);
-        //console.log("Desired content container: " + desiredContentContainer);
         // Change content to overview
         xhr2.open('GET', urlContent);
         xhr2.onreadystatechange = function () {
-            //console.log("DRUHY READY STATE CHANGE FUNGUJE");
-            var DONE = 4; // readyState 4 means the request is done.
-            var OK = 200; // status 200 is a successful return.
+            var DONE = 4;
+            var OK = 200;
             if (xhr2.readyState === DONE) {
                 if (xhr2.status === OK) {
                     document.getElementById("content-container").innerHTML = this.responseText;
                     actualContentContainer = desiredContentContainer;
-                    //console.log("Actual content container after change: " + actualContentContainer);
                 } else {
-                    console.log('Error: ' + xhr2.status); // An error occurred during the request.
+                    console.log('Error: ' + xhr2.status);
                 }
             }
         };
         xhr2.send(null);
-
     }
-
-
 }

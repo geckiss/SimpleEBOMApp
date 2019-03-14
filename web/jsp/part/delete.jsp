@@ -14,19 +14,13 @@
     <title>Simple EBOM App - Delete Part</title>
     <link rel="stylesheet" type="text/css" href="../../css/part/deletePart.css">
 </head>
-<body>
-<div id="deletePage-content-container">
-    <!--
-    <form action="" method="post">
-      <input type="submit" name="addButton" value="Add Part" />
-    </form>
-    -->
-    <div id="delete-table-container">
-
-        <table id="part-delete-table">
-            <tr>
-                <!-- Headers -->
-                <%
+    <body>
+        <div id="deletePage-content-container">
+            <div id="delete-table-container">
+                <table id="part-delete-table">
+                    <tr>
+                    <!-- Headers -->
+                    <%
                     response.setContentType("text/html");
                     Connection conn;
                     ResultSet res = null;
@@ -61,9 +55,9 @@
                             while (res.next()) {
                                 if (preskocId) {
                                     // No ID in table, first header will be PART
-                %>
-                <th>PART</th>
-                <%
+                                    %>
+                                    <th>PART</th>
+                                    <%
                                     preskocId = false;
                                     continue;
                                 }
@@ -76,72 +70,70 @@
                             e.printStackTrace();
                         }
                     }
-                %>
-            </tr>
-
-            <!-- Data -->
-            <%
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
-                        "admin",
-                        "nbusr123"
-                    );
-                    Statement query = conn.createStatement();
-                    res = query.executeQuery("SELECT * FROM part");
-
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-                if (res != null) {
-                    int colCount;
-                    try {
-                        int itemId = 0; // ID z DB
-
-                        while (res.next()) {
-                            colCount = res.getMetaData().getColumnCount();
-                        %>
-                        <tr>
-                            <%
-                            // Indexovanie začína od 1 ...
-
-                            for (int i = 1; i <= colCount; i++) {
-                        %>
-                        <td >
-                            <%= res.getObject(i)%>
-                        </td>
-                        <%
-                               if (i == 1) {
-                                   // TODO namiesto 5 ziskat z res hodnotu prveho td(idcko part-u)
-                                   itemId = res.getInt(1);
-                               }
-                            }
-
-                        %>
-                        <td>
-                            <form method="post" action="DeletePart">
-                                <input type="number" name="ItemId" value="<%= itemId %>" />
-                                <input class="delete-buttons" type="submit" value="DELETE" name="DELETE" />
-                            </form>
-                        </td>
+                    %>
                     </tr>
 
+                    <!-- Data -->
                     <%
-                        }
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        conn = DriverManager.getConnection(
+                            "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
+                            "admin",
+                            "nbusr123"
+                        );
+                        Statement query = conn.createStatement();
+                        res = query.executeQuery("SELECT * FROM part");
+
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                }
-            %>
-        </table>
-    </div>
-</div>
-</body>
+
+                    if (res != null) {
+                        int colCount;
+                        try {
+                            int itemId = 0; // ID z DB
+                            while (res.next()) {
+                                colCount = res.getMetaData().getColumnCount();
+                                %>
+                                <tr>
+                                <%
+                                // Indexovanie začína od 1 ...
+
+                                for (int i = 1; i <= colCount; i++) {
+                                    %>
+                                    <td >
+                                        <%= res.getObject(i)%>
+                                    </td>
+                                    <%
+                                    if (i == 1) {
+                                        // TODO namiesto 5 ziskat z res hodnotu prveho td(idcko part-u)
+                                        itemId = res.getInt(1);
+                                    }
+                                }
+
+                                %>
+                                    <td>
+                                        <form method="post" action="DeletePart">
+                                            <input type="number" name="ItemId" value="<%= itemId %>" />
+                                            <input class="delete-buttons" type="submit" value="DELETE" name="DELETE" />
+                                        </form>
+                                    </td>
+                                </tr>
+                            <%
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    %>
+                </table>
+            </div>
+        </div>
+    </body>
 </html>

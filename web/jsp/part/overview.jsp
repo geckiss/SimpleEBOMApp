@@ -10,18 +10,12 @@
 <head>
     <title>Parts Overview</title>
 </head>
-<body>
-<!--
-    response.setContentType("text/html");
--->
-
-<div id="overviewPage-content-container">
-
-
-        <div id="table-container">
-            <table>
-                <tr>
-                    <%
+    <body>
+        <div id="overviewPage-content-container">
+            <div id="table-container">
+                <table>
+                    <tr>
+                        <%
                         response.setContentType("text/html");
                         Connection conn;
                         ResultSet res = null;
@@ -34,17 +28,17 @@
 
                         try {
                             conn = DriverManager.getConnection(
-                                    "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
-                                    "admin",
-                                    "nbusr123"
+                                "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
+                                "admin",
+                                "nbusr123"
                             );
 
                             Statement statement = conn.createStatement();
                             res = conn.getMetaData().getColumns(
-                                    null,
-                                    null,
-                                    "part",
-                                    null
+                                null,
+                                null,
+                                "part",
+                                null
                             );
                         } catch (SQLException e) {
                             e.printStackTrace();
@@ -56,9 +50,9 @@
                                 while (res.next()) {
                                     if (preskocId) {
                                         // V tabuľke chcem mať Object, nie ID
-                    %>
-                    <th>PART</th>
-                    <%
+                                        %>
+                                        <th>PART</th>
+                                        <%
                                         preskocId = false;
                                         continue;
                                     }
@@ -69,58 +63,56 @@
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             }
-
                         }
-                    %>
-                </tr>
-                <%
+                        %>
+                        </tr>
+                        <%
 
-                    try {
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                        try {
+                            Class.forName("com.mysql.cj.jdbc.Driver");
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
 
-                    try {
-                        conn = DriverManager.getConnection(
+                        try {
+                            conn = DriverManager.getConnection(
                                 "jdbc:mysql://localhost:3306/technia?useLegacyDatetimeCode=false&serverTimezone=UTC",
                                 "admin",
                                 "nbusr123"
-                        );
-                        Statement query = conn.createStatement();
-                        res = query.executeQuery("SELECT * FROM part");
+                            );
+                            Statement query = conn.createStatement();
+                            res = query.executeQuery("SELECT * FROM part");
 
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (res != null) {
-                        int colCount;
-                        try {
-                            while (res.next()) {
-                                colCount = res.getMetaData().getColumnCount();
-                %>
-                <tr>
-                    <%
-                        // Indexovanie začína od 1 ...
-
-                        for (int i = 1; i <= colCount; i++) {
-                    %>
-                    <td ><%= res.getObject(i)%></td>
-                    <%
-                        }
-                    %>
-                </tr>
-
-                <%
-                            }
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
-                    }
-                %>
-            </table>
+
+                        if (res != null) {
+                            int colCount;
+                            try {
+                                while (res.next()) {
+                                    colCount = res.getMetaData().getColumnCount();
+                                    %>
+                                    <tr>
+                                    <%
+                                    // Indexovanie začína od 1 ...
+
+                                    for (int i = 1; i <= colCount; i++) {
+                                        %>
+                                        <td ><%= res.getObject(i)%></td>
+                                        <%
+                                    }
+                                    %>
+                                    </tr>
+                                    <%
+                                }
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    %>
+                </table>
+            </div>
         </div>
-</div>
-</body>
+    </body>
 </html>

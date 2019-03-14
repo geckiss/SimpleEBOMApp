@@ -8,14 +8,6 @@
     margin: 20px 0;
 }
 
-#part-add-separator #add-successful {
-    background-color: green;
-}
-
-#part-add-separator #add-unsuccessful {
-    background-color: red;
-}
-
 #part-add-form-container {
     margin: 0 auto;
 }

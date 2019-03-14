@@ -11,7 +11,7 @@
 <html>
   <head>
     <title>Simple EBOM App</title>
-    <link href="${pageContext.request.contextPath}/css/index_style.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/css/index.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/index.js" > </script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/part/updatePart.js" > </script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/link/updateLink.js" > </script>
