@@ -1,0 +1,37 @@
+#linkTree-content-container {
+    margin: 0 auto;
+}
+
+#linkTree-table-container {
+    margin: 0 auto;
+    border: none;
+}
+
+#linkTree-table {
+    border: solid black;
+}
+
+#linkTree-table tbody{
+    font-size: 24px;
+}
+
+#linkTree-table-headers-row {
+    border-bottom: solid black;
+}
+
+#linkTree-table tr:nth-child(n) {
+    background-color: #ffffff;
+}
+
+#linkTree-table-container td {
+    border: none;
+}
+
+#linkTree-table-container td:nth-child(1) {
+    border-left: solid black 2px;
+    border-right: solid black 2px;
+}
+
+a {
+    text-decoration: none;
+}
