@@ -1,0 +1,3 @@
+<dependency> -> spring-boot-jpa
+<dep...> -> h2
+<> -> spring-boot-dev-tools
